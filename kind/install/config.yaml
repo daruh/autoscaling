@@ -9,6 +9,11 @@ nodes:
     nodeRegistration:
       kubeletExtraArgs:
         node-labels: "ingress-ready=true"
+#  - |
+#    kind: ClusterConfiguration
+#    controllerManager:
+#      extraArgs:
+#        - --horizontal-pod-autoscaler-cpu-initialization-period 2
   extraPortMappings:
   - containerPort: 80
     hostPort: 8080

@@ -15,6 +15,10 @@
 This command will generate approximately 250m CPU load for 2 minutes:
 
 ```
+kubectl port-forward service/application-cpu 8080
+```
+
+```
 curl localhost:8080/ConsumeCPU -d "millicores=250&durationSec=120" 
 ```
 
