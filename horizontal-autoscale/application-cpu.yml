@@ -1,0 +1,36 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: application-cpu
+spec:
+  selector:
+    app: application-cpu
+  ports:
+  - port: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: application-cpu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: application-cpu
+  template:
+    metadata:
+      labels:
+        app: application-cpu
+    spec:
+      containers:
+        - name: resource-consumer
+          image: gcr.io/kubernetes-e2e-test-images/resource-consumer:1.5
+          ports:
+          - containerPort: 8080
+          resources:
+            requests:
+              memory: "50Mi"
+              cpu: "50m"
+            limits:
+              memory: "50Mi"
+              cpu: "100m"
