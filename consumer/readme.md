@@ -1,0 +1,67 @@
+# Configure Resource Requests for the Deployment
+This command will generate approximately 250m CPU load for 2 minutes:
+
+```sh
+kubectl apply -f consumer-cpu.yml
+```
+
+```sh
+kubectl get pods
+```
+
+```sh
+kubectl top pods
+```
+
+```bash
+kubectl port-forward service/consumer-cpu 8080
+```
+
+```sh
+curl localhost:8080/ConsumeCPU -d "millicores=250&durationSec=120" 
+```
+
+    After generating the load, observe the behavior of the autoscaler. It should scale the Deployment up. Then, about 5 minutes after the CPU load goes way, it should scale back down.
+
+```sh
+kubectl get pods -o wide
+```
+
+Create a Horizontal Pod Autoscaler (HPA) using the manifest file, with a minimum of two replicas, a maximum of eight replicas, and a CPU utilization percentage of 50:
+
+```sh
+kubectl autoscale deployment consumer-cpu --cpu-percent=50 --min=1 --max=8
+```
+
+View the HPA that we just created:
+```sh
+kubectl get hpa
+```
+
+See description
+```sh
+kubectl describe hpa/consumer-cpu 
+```
+
+You may need to rerun this command to reflect the metrics that we set.
+
+View the status of our Pods and their CPU utilization:
+
+```sh
+kubectl top pods
+```
+
+If your CPU utilization is currently low, you should see it scale down in about five minutes to the minimum of only two replicas.
+
+View the status of the Pods in the Deployment:
+```sh
+kubectl get pods
+```
+
+You should only see two Pods in the Deployment.
+
+Delete hpa
+
+```sh
+kubectl delete hpa consumer-cpu 
+```

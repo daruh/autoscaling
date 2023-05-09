@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+
+#!/usr/bin/env bash
+set -o errexit
+set -o nounset
+set -o pipefail
+
+BASE_PATH=${PWD}/../
+TMP_DIR=tmp
+
+check_addons(){
+	case "$1" in
+		info|vpa|goldilocks)
+		;;
+		*)
+		usage
+	esac
+}
+
+info() {
+    kubectl get pods 
+}
+
+vpa() {
+    MSYS_NO_PATHCONV=1
+    export MSYS_NO_PATHCONV=1
+
+    cd ${BASE_PATH}/vertical-autoscale
+    mkdir ${TMP_DIR} && cd ${TMP_DIR}
+    git clone https://github.com/kubernetes/autoscaler.git
+
+    cd ${BASE_PATH}/vertical-autoscale
+    cp gencerts.sh ${TMP_DIR}/autoscaler/vertical-pod-autoscaler/pkg/admission-controller/gencerts.sh
+    sh ${TMP_DIR}/autoscaler/vertical-pod-autoscaler/hack/vpa-up.sh
+    rm ${TMP_DIR} -r -f
+}
+
+goldilocks() {
+    cd ${BASE_PATH}/vertical-autoscale
+    mkdir ${TMP_DIR} && cd ${TMP_DIR}
+    git clone https://github.com/FairwindsOps/goldilocks.git
+    cd goldilocks/hack/manifests/
+    kubectl create namespace goldilocks
+    kubectl -n goldilocks apply -f ./controller
+    kubectl -n goldilocks apply -f ./dashboard
+
+    cd ${BASE_PATH}/vertical-autoscale
+    rm ${TMP_DIR} -r -f
+
+    kubectl label ns default goldilocks.fairwinds.com/enabled=true
+    kubectl label ns default goldilocks.fairwinds.com/vpa-update-mode="off"
+
+}
+
+
+run() {
+	if [ $# -ne 1 ]; then
+		usage
+	fi
+
+	check_addons $1
+
+	${1//-/_}
+
+	exit 0
+}
+
+usage() {
+	echo 1>&2 "Usage: $0 one of [info,vpa]"
+	exit 1
+}
+
+run "$@"

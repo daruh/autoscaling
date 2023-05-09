@@ -1,43 +1,51 @@
-Path conversion for autoscaler vpa
+
+Registering VPA recommendations without auto updates
+
 ```sh
-MSYS_NO_PATHCONV=1
-export MSYS_NO_PATHCONV=1
+kubectl apply -f vpa_off.yaml
+```
+
+Info about vpa
+
+```sh
+kubectl describe vpa consumer-cpu
 ```
 
 ```sh
-cd /c/SNOW/private_repos/autoscaling/kind/install
-kubectl apply -f metric-server.yaml 
-
-cd /c/SNOW/private_repos/autoscaling/horizontal-autoscale
-kubectl apply -f application-cpu.yml
-
-```
-```sh
-cd /c/SNOW/private_repos/autoscaling/vertical-autoscale/tmp/autoscaler/vertical-pod-autoscaler
-./hack/vpa-up.sh
-cd /c/SNOW/private_repos/autoscaling/vertical-autoscale/tmp/autoscaler/vertical-pod-autoscaler/pkg/admission-controller/gencerts.sh
-```
-
-```sh
-cd /c/SNOW/private_repos/autoscaling/vertical-autoscale
-kubectl apply -f vpa.yaml
-kubectl scale deploy application-cpu --replicas 2
-kubectl describe vpa application-cpu
 kubectl get pods
-kubectl describe po application-cpu-544667d57b-gbb5r
-kubectl describe deployment/application-cpu
+```
+
+VPA will work only when at least 2 replica set are configured
+```sh
+kubectl scale deploy consumer-cpu --replicas 2
+```
+
+Register VPA with auto registrations
+```sh
+kubectl apply -f vpa_off.yaml
 ```
 
 ```sh
-kubectl create namespace goldilocks
-kubectl -n goldilocks apply -f ./controller
-kubectl -n goldilocks apply -f ./dashboard
+kubectl describe po consumer-cpu-b649c9d4b-589ps
 ```
 
-```sh
-cd /tmp
-git clone https://github.com/FairwindsOps/goldilocks.git
-cd goldilocks/hack/manifests/
-kubectl delete vpa application-cpu
 
+```sh
+kubectl describe deployment/consumer-cpu
+```
+
+Delete VPA before Goldilocks install
+
+```sh
+kubectl delete vpa consumer-cpu
+```
+
+Run goldilocks make
+```sh
+cd .. && make goldilocks 
+```
+
+Port forward
+```sh
+ kubectl -n goldilocks port-forward svc/goldilocks-dashboard 80
 ```
