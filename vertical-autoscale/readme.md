@@ -15,23 +15,33 @@ kubectl describe vpa consumer-cpu
 kubectl get pods
 ```
 
-VPA will work only when at least 2 replica set are configured
-```sh
-kubectl scale deploy consumer-cpu --replicas 2
-```
-
 Register VPA with auto registrations
 ```sh
-kubectl apply -f vpa_off.yaml
+kubectl apply -f vpa_auto.yaml
 ```
 
 ```sh
-kubectl describe po consumer-cpu-b649c9d4b-589ps
+kubectl describe po consumer-cpu-b649c9d4b-hkt6x
 ```
 
+It dosent affect deployment
 
 ```sh
 kubectl describe deployment/consumer-cpu
+```
+
+Add some workload
+
+```sh
+kubectl port-forward service/consumer-cpu 8080
+```
+
+```sh
+curl localhost:8080/ConsumeCPU -d "millicores=250&durationSec=120" 
+```
+See workload
+```sh
+kubectl top pods
 ```
 
 Delete VPA before Goldilocks install
