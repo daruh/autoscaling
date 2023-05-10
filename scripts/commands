@@ -10,7 +10,7 @@ TMP_DIR=tmp
 
 check_addons(){
 	case "$1" in
-		info|vpa|goldilocks)
+		info|vpa|goldilocks|vpadownload|vpainstall)
 		;;
 		*)
 		usage
@@ -28,6 +28,23 @@ vpa() {
     cd ${BASE_PATH}/vertical-autoscale
     mkdir ${TMP_DIR} && cd ${TMP_DIR}
     git clone https://github.com/kubernetes/autoscaler.git
+
+    cd ${BASE_PATH}/vertical-autoscale
+    cp gencerts.sh ${TMP_DIR}/autoscaler/vertical-pod-autoscaler/pkg/admission-controller/gencerts.sh
+    sh ${TMP_DIR}/autoscaler/vertical-pod-autoscaler/hack/vpa-up.sh
+    rm ${TMP_DIR} -r -f
+}
+
+vpadownload() {
+  cd ${BASE_PATH}/vertical-autoscale
+  mkdir ${TMP_DIR} && cd ${TMP_DIR}
+  git clone https://github.com/kubernetes/autoscaler.git
+}
+
+
+vpainstall() {
+    MSYS_NO_PATHCONV=1
+    export MSYS_NO_PATHCONV=1
 
     cd ${BASE_PATH}/vertical-autoscale
     cp gencerts.sh ${TMP_DIR}/autoscaler/vertical-pod-autoscaler/pkg/admission-controller/gencerts.sh
