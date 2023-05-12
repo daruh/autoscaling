@@ -1,3 +1,8 @@
+Check metric server
+
+```sh
+kubectl top pods
+```
 
 Registering VPA recommendations without auto updates
 
@@ -21,7 +26,12 @@ kubectl apply -f vpa_auto.yaml
 ```
 
 ```sh
-kubectl describe po consumer-cpu-b649c9d4b-wdkfk
+kubectl describe po consumer-cpu-b649c9d4b-krrsb
+
+```
+
+```sh
+kubectl describe po consumer-cpu-b649c9d4b-ttgnq
 ```
 
 It dosent affect deployment
@@ -51,9 +61,6 @@ kubectl delete vpa consumer-cpu
 ```
 
 Run goldilocks make
-```sh
-cd .. && make goldilocks 
-```
 
 Port forward
 ```sh

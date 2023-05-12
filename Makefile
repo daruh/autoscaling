@@ -5,14 +5,14 @@ SCRIPTS=${PWD}/scripts
 CONSUMER=${PWD}/consumer
 
 #Setup cluster
-.PHONY: startup
-startup:
+.PHONY: create-cluster
+create-cluster:
 	echo 'Creating cluster ...'
 	@cd ${KIND} && kind create cluster --config config.yaml
 
 #Install metric server
-.PHONY: metrics
-metrics:
+.PHONY: install-metrics
+install-metrics:
 	@cd ${KIND}  && kubectl apply -f metric-server.yaml
 
 #Install consumer cpu pods
@@ -37,13 +37,13 @@ vpa-download:
 	@cd ${SCRIPTS} && sh commands vpadownload
 
 #Install vpa (after sources downloaded)
-.PHONY: vpa-install
-vpa-install:
+.PHONY: install-vpa
+install-vpa:
 	@cd ${SCRIPTS} && sh commands vpainstall
 
 #Install goldilocks
-.PHONY: goldilocks
-goldilocks:
+.PHONY: install-goldilocks
+install-goldilocks:
 	@cd ${SCRIPTS} && sh commands goldilocks
 
 #Deletes cluster
