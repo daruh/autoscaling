@@ -34,22 +34,3 @@ spec:
             limits:
               memory: "50Mi"
               cpu: "100m"
-#---
-#
-#apiVersion: autoscaling/v2beta1
-#kind: HorizontalPodAutoscaler
-#metadata:
-#  name: hpa-auto-scale
-#  namespace: default
-#spec:
-#  scaleTargetRef:
-#    apiVersion: apps/v1
-#    kind: Deployment
-#    name: consumer-cpu
-#  minReplicas: 1
-#  maxReplicas: 8
-#  metrics:
-#    - type: Resource
-#      resource:
-#        name: cpu
-#        targetAverageUtilization: 50

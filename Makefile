@@ -21,6 +21,11 @@ workload-create:
 	@cd ${CONSUMER} && kubectl apply -f consumer-cpu.yml
 	kubectl get pods
 
+#See consumer cpu status
+.PHONY: workload-info
+workload-info:
+	kubectl get pods
+
 #Setup entire vpa from source
 .PHONY: vpa-setup
 vpa-setup:

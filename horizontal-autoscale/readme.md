@@ -23,7 +23,7 @@ kubectl top pods
 
 Generate workload
 ```sh
-curl localhost:8080/ConsumeCPU -d "millicores=500&durationSec=120" 
+curl localhost:8080/ConsumeCPU -d "millicores=500&durationSec=60" 
 ```
 
 After generating the load, observe the behavior of the autoscaler. It should scale the Deployment up. Then, about 5 minutes after the CPU load goes way, it should scale back down.

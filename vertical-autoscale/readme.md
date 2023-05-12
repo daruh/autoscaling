@@ -21,7 +21,7 @@ kubectl apply -f vpa_auto.yaml
 ```
 
 ```sh
-kubectl describe po consumer-cpu-b649c9d4b-hkt6x
+kubectl describe po consumer-cpu-b649c9d4b-wdkfk
 ```
 
 It dosent affect deployment
@@ -37,7 +37,7 @@ kubectl port-forward service/consumer-cpu 8080
 ```
 
 ```sh
-curl localhost:8080/ConsumeCPU -d "millicores=250&durationSec=120" 
+curl localhost:8080/ConsumeCPU -d "millicores=250&durationSec=30" 
 ```
 See workload
 ```sh
