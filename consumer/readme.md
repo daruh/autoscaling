@@ -16,4 +16,7 @@ Open ports
 ```bash
 kubectl port-forward service/consumer-cpu 8080
 ```
-
+Generate workload
+```sh
+curl localhost:8080/ConsumeCPU -d "millicores=500&durationSec=60" 
+```

@@ -1,7 +1,10 @@
 # HPA Demo
 
 Create a Horizontal Pod Autoscaler (HPA) using the manifest file, with a minimum of two replicas, a maximum of eight replicas, and a CPU utilization percentage of 50:
-
+Open ports
+```bash
+kubectl port-forward service/consumer-cpu 8080
+```
 from cmdline
 ```sh
 kubectl autoscale deployment consumer-cpu --cpu-percent=50 --min=1 --max=8

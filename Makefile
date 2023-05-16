@@ -19,7 +19,6 @@ install-metrics:
 .PHONY: workload-create
 workload-create:
 	@cd ${CONSUMER} && kubectl apply -f consumer-cpu.yml
-	kubectl get pods
 
 #See consumer cpu status
 .PHONY: workload-info

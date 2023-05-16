@@ -4,6 +4,15 @@ Check metric server
 kubectl top pods
 ```
 
+Open ports
+```bash
+kubectl port-forward service/consumer-cpu 8080
+```
+
+```sh
+curl localhost:8080/ConsumeCPU -d "millicores=250&durationSec=90" 
+```
+
 Registering VPA recommendations without auto updates
 
 ```sh
@@ -26,12 +35,12 @@ kubectl apply -f vpa_auto.yaml
 ```
 
 ```sh
-kubectl describe po consumer-cpu-b649c9d4b-krrsb
+kubectl describe po consumer-cpu-b649c9d4b-qfd8l
 
 ```
 
 ```sh
-kubectl describe po consumer-cpu-b649c9d4b-ttgnq
+kubectl describe po consumer-cpu-b649c9d4b-xkjd7  
 ```
 
 It dosent affect deployment
@@ -47,7 +56,7 @@ kubectl port-forward service/consumer-cpu 8080
 ```
 
 ```sh
-curl localhost:8080/ConsumeCPU -d "millicores=250&durationSec=30" 
+curl localhost:8080/ConsumeCPU -d "millicores=250&durationSec=60" 
 ```
 See workload
 ```sh
