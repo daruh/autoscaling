@@ -4,6 +4,9 @@ KIND=${PWD}/kind
 SCRIPTS=${PWD}/scripts
 CONSUMER=${PWD}/consumer
 
+.PHONY: demo
+demo:	create-cluster install-metrics workload-create vpa-setup
+
 #Setup cluster
 .PHONY: create-cluster
 create-cluster:
