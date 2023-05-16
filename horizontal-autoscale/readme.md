@@ -1,6 +1,17 @@
 # HPA Demo
 
 Create a Horizontal Pod Autoscaler (HPA) using the manifest file, with a minimum of two replicas, a maximum of eight replicas, and a CPU utilization percentage of 50:
+clean after VPA presentation
+```sh
+kubectl delete deployment/consumer-cpu
+```
+
+Check pods are down
+```sh
+kubectl get pods
+```
+
+
 Open ports
 ```bash
 kubectl port-forward service/consumer-cpu 8080
@@ -26,7 +37,7 @@ kubectl top pods
 
 Generate workload
 ```sh
-curl localhost:8080/ConsumeCPU -d "millicores=500&durationSec=60" 
+curl localhost:8080/ConsumeCPU -d "millicores=500&durationSec=90" 
 ```
 
 After generating the load, observe the behavior of the autoscaler. It should scale the Deployment up. Then, about 5 minutes after the CPU load goes way, it should scale back down.
