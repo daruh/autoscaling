@@ -4,6 +4,7 @@ KIND=${PWD}/kind
 SCRIPTS=${PWD}/scripts
 CONSUMER=${PWD}/consumer
 
+# Prerequisite is openssl ^1.1.1, kubectl, wsl (for windows)
 .PHONY: demo
 demo:	create-cluster install-metrics workload-create vpa-setup
 
