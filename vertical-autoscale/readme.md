@@ -35,12 +35,12 @@ kubectl apply -f vpa_auto.yaml
 ```
 
 ```sh
-kubectl describe po consumer-cpu-b649c9d4b-bzqzz
+kubectl describe po consumer-cpu-b649c9d4b-ndqhh
 
 ```
 
 ```sh
-kubectl describe po consumer-cpu-b649c9d4b-p9pds
+kubectl describe po consumer-cpu-b649c9d4b-nvs6r
 ```
 
 It dosent affect deployment
